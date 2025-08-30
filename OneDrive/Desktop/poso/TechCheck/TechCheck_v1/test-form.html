@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechCheck - Form Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #0f1419;
+            color: white;
+        }
+        .form-container {
+            background: rgba(17, 24, 39, 0.8);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #374151;
+            border-radius: 4px;
+            background: #1f2937;
+            color: white;
+            font-size: 16px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        button:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .checkbox-container input[type="checkbox"] {
+            width: auto;
+        }
+        .success, .error {
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+            color: #22c55e;
+        }
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>TechCheck - Early Access Test</h1>
+        <p>Test your Google Sheets integration</p>
+        
+        <form id="early-access-form">
+            <div class="form-group">
+                <label for="name">Name and Surname</label>
+                <input type="text" id="name" name="name" required placeholder="Harry Potter">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="hp3107@student.hogwarts.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="university">University</label>
+                <input type="text" id="university" name="university" required placeholder="Hogwarts">
+            </div>
+            
+            <div class="form-group">
+                <label for="degreeType">Degree Type</label>
+                <select id="degreeType" name="degreeType" required>
+                    <option value="">Select degree</option>
+                    <option value="Bachelor's">Bachelor's</option>
+                    <option value="Master's">Master's</option>
+                    <option value="PhD">PhD</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
+                <label for="privacyConsent">I agree with the Privacy Policy</label>
+            </div>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="updatesConsent" name="updatesConsent">
+                <label for="updatesConsent">Keep me updated on the latest news</label>
+            </div>
+            
+            <button type="submit">Apply for early access</button>
+        </form>
+    </div>
+
+    <script src="config-demo.js"></script>
+    <script src="student-form-handler.js"></script>
+</body>
+</html>
