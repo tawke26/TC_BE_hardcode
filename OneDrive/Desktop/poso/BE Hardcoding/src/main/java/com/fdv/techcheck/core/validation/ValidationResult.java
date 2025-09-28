@@ -133,6 +133,28 @@ public class ValidationResult {
         return errorMessage;
     }
     
+    /**
+     * Gets a descriptive message about the validation result.
+     *
+     * @return A human-readable message describing the validation outcome
+     */
+    public String getMessage() {
+        switch (status) {
+            case PASS:
+                return "Validation passed successfully - no issues found";
+            case WARNING:
+                return "Validation completed with " + details.size() + " warning(s)";
+            case FAIL:
+                return "Validation failed with " + details.size() + " issue(s)";
+            case ERROR:
+                return errorMessage != null ? errorMessage : "Validation error occurred";
+            case SKIP:
+                return errorMessage != null ? "Skipped: " + errorMessage : "Validation was skipped";
+            default:
+                return "Unknown validation status";
+        }
+    }
+    
     // Analysis methods
     
     /**

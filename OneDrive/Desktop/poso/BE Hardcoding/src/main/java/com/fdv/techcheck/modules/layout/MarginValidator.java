@@ -78,15 +78,18 @@ public final class MarginValidator extends AbstractDocumentValidator {
      * Validates a specific margin against the FDV requirement.
      *
      * @param marginName The name of the margin (Left, Right, Top, Bottom)
-     * @param actualMarginPoints The actual margin value in points
+     * @param actualMarginCm The actual margin value in centimeters (from PageSettings)
      * @param details List to add validation details to
      */
-    private void validateMargin(final String marginName, final double actualMarginPoints,
+    private void validateMargin(final String marginName, final double actualMarginCm,
                                final List<ValidationDetail> details) {
-        double actualMarginCm = pointsToCentimeters(actualMarginPoints);
-        double difference = Math.abs(actualMarginPoints - REQUIRED_MARGIN_POINTS);
+        // actualMarginCm is already in centimeters from PageSettings - no conversion needed
+        double difference = Math.abs(actualMarginCm - REQUIRED_MARGIN_CM);
         
-        if (difference > TOLERANCE_POINTS) {
+        // Convert tolerance from points to centimeters for comparison
+        double toleranceCm = TOLERANCE_POINTS / POINTS_PER_CM; // ≈ 0.035 cm
+        
+        if (difference > toleranceCm) {
             ValidationSeverity severity = determineSeverity(difference);
             
             ValidationDetail detail = ValidationDetail.builder()
@@ -98,18 +101,18 @@ public final class MarginValidator extends AbstractDocumentValidator {
                     
             details.add(detail);
             
-            logger.warn("Margin violation detected: {} margin is {:.2f} cm (expected: {:.1f} cm)", 
-                       marginName.toLowerCase(), actualMarginCm, REQUIRED_MARGIN_CM);
+            logger.warn("Margin violation detected: {} margin is {} cm (expected: {} cm)",
+                       marginName.toLowerCase(), String.format("%.2f", actualMarginCm), String.format("%.1f", REQUIRED_MARGIN_CM));
         } else {
-            logger.debug("{} margin validation passed: {:.2f} cm", marginName.toLowerCase(), actualMarginCm);
+            logger.debug("{} margin validation passed: {} cm", marginName.toLowerCase(), String.format("%.2f", actualMarginCm));
         }
     }
     
     /**
      * Determines the severity of a margin violation based on the difference from required value.
      */
-    private ValidationSeverity determineSeverity(final double differencePoints) {
-        double differenceCm = pointsToCentimeters(differencePoints);
+    private ValidationSeverity determineSeverity(final double differenceCm) {
+        // differenceCm is already in centimeters - no conversion needed
         
         if (differenceCm >= CRITICAL_DIFFERENCE_CM) {
             return ValidationSeverity.CRITICAL; // 1+ cm difference
@@ -132,14 +135,14 @@ public final class MarginValidator extends AbstractDocumentValidator {
      * Formats the expected margin value.
      */
     private String formatExpectedMargin() {
-        return String.format("%.1f cm (%.0f points)", REQUIRED_MARGIN_CM, REQUIRED_MARGIN_POINTS);
+        return String.format("%.1f cm", REQUIRED_MARGIN_CM);
     }
     
     /**
      * Formats the actual margin value.
      */
     private String formatActualMargin(final double actualCm) {
-        return String.format("%.2f cm (%.0f points)", actualCm, centimetersToPoints(actualCm));
+        return String.format("%.2f cm", actualCm);
     }
     
     /**

@@ -1,5 +1,6 @@
 package com.fdv.techcheck.gui;
 
+import com.fdv.techcheck.core.document.DocumentMetadata;
 import com.fdv.techcheck.core.document.DocumentProcessor;
 import com.fdv.techcheck.core.document.ThesisDocument;
 import com.fdv.techcheck.core.validation.IValidator;
@@ -10,6 +11,7 @@ import com.fdv.techcheck.modules.layout.MarginValidator;
 import com.fdv.techcheck.modules.layout.FontValidator;
 import com.fdv.techcheck.modules.layout.LineSpacingValidator;
 import com.fdv.techcheck.modules.layout.PageFormatValidator;
+import com.fdv.techcheck.reports.PdfReportGenerator;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -26,6 +28,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -43,6 +48,11 @@ public class MainWindowController {
     private File selectedDocument;
     private ThesisDocument loadedDocument;
     private boolean validationInProgress = false;
+    
+    // Validation results storage
+    private DocumentMetadata currentMetadata;
+    private List<ValidationResult> currentResults = new ArrayList<>();
+    private Map<String, ValidationResult> currentResultsMap = new HashMap<>();
     
     // FXML injected components
     @FXML private TextField documentPathField;
@@ -183,6 +193,9 @@ public class MainWindowController {
         
         // Clear previous results
         resultsContainer.getChildren().clear();
+        currentResults.clear();
+        currentResultsMap.clear();
+        currentMetadata = loadedDocument.getMetadata();
         
         // Start validation in background thread
         startValidationTask();
@@ -216,6 +229,10 @@ public class MainWindowController {
                     try {
                         // Perform validation
                         ValidationResult result = validator.validate(loadedDocument);
+                        
+                        // Store result for export
+                        currentResults.add(result);
+                        currentResultsMap.put(validatorName, result);
                         
                         // Update UI with result
                         Platform.runLater(() -> {
@@ -338,8 +355,63 @@ public class MainWindowController {
      */
     @FXML
     private void handleExportReport() {
-        // TODO: Implement PDF report generation
-        showAlert("Export Report", "Report export functionality will be implemented in the next version.", Alert.AlertType.INFORMATION);
+        if (currentResultsMap == null || currentResultsMap.isEmpty()) {
+            showAlert("Export Report", "No validation results to export. Please run validation first.", Alert.AlertType.WARNING);
+            return;
+        }
+        
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save PDF Report");
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("PDF Files", "*.pdf")
+        );
+        
+        // Set default filename with timestamp
+        String timestamp = java.time.LocalDateTime.now().format(
+            java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")
+        );
+        fileChooser.setInitialFileName("TechCheck_Report_" + timestamp + ".pdf");
+        
+        File file = fileChooser.showSaveDialog(primaryStage);
+        if (file != null) {
+            Task<Void> exportTask = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    updateMessage("Generating PDF report...");
+                    
+                    PdfReportGenerator generator = new PdfReportGenerator();
+                    generator.generateReport(file, loadedDocument, currentResultsMap);
+                    
+                    return null;
+                }
+                
+                @Override
+                protected void succeeded() {
+                    Platform.runLater(() -> {
+                        showAlert("Export Complete",
+                            "PDF report has been saved successfully to:\n" + file.getAbsolutePath(),
+                            Alert.AlertType.INFORMATION);
+                    });
+                }
+                
+                @Override
+                protected void failed() {
+                    Platform.runLater(() -> {
+                        showAlert("Export Failed",
+                            "Failed to generate PDF report: " + getException().getMessage(),
+                            Alert.AlertType.ERROR);
+                    });
+                }
+            };
+            
+            // Show progress during export
+            validationProgressBar.progressProperty().bind(exportTask.progressProperty());
+            progressLabel.textProperty().bind(exportTask.messageProperty());
+            
+            Thread exportThread = new Thread(exportTask);
+            exportThread.setDaemon(true);
+            exportThread.start();
+        }
     }
     
     /**

@@ -190,8 +190,8 @@ public final class FontValidator extends AbstractDocumentValidator {
                         
                 details.add(detail);
                 
-                logger.warn("Font family violation: {} used in {:.1f}% of text", 
-                           fontFamily, percentage * 100);
+                logger.warn("Font family violation: {} used in {}% of text",
+                           fontFamily, String.format("%.1f", percentage * 100));
             }
         }
     }
@@ -221,8 +221,8 @@ public final class FontValidator extends AbstractDocumentValidator {
                         
                 details.add(detail);
                 
-                logger.warn("Font size violation: {}pt used in {:.1f}% of text", 
-                           fontSize, percentage * 100);
+                logger.warn("Font size violation: {}pt used in {}% of text",
+                           fontSize, String.format("%.1f", percentage * 100));
             }
         }
     }

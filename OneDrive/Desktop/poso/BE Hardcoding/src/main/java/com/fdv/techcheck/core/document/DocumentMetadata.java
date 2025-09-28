@@ -12,6 +12,7 @@ import java.util.Objects;
  */
 public class DocumentMetadata {
     
+    private final String fileName;
     private final String title;
     private final String author;
     private final String subject;
@@ -27,6 +28,7 @@ public class DocumentMetadata {
      * Private constructor - use Builder to create instances.
      */
     private DocumentMetadata(Builder builder) {
+        this.fileName = builder.fileName;
         this.title = builder.title;
         this.author = builder.author;
         this.subject = builder.subject;
@@ -49,6 +51,10 @@ public class DocumentMetadata {
     }
     
     // Getters
+    
+    public String getFileName() {
+        return fileName;
+    }
     
     public String getTitle() {
         return title;
@@ -87,6 +93,10 @@ public class DocumentMetadata {
     }
     
     public long getFileSizeBytes() {
+        return fileSizeBytes;
+    }
+    
+    public long getFileSize() {
         return fileSizeBytes;
     }
     
@@ -146,6 +156,7 @@ public class DocumentMetadata {
      * Builder class for constructing DocumentMetadata instances.
      */
     public static class Builder {
+        private String fileName;
         private String title;
         private String author;
         private String subject;
@@ -158,6 +169,11 @@ public class DocumentMetadata {
         private long fileSizeBytes;
         
         private Builder() {}
+        
+        public Builder fileName(String fileName) {
+            this.fileName = fileName;
+            return this;
+        }
         
         public Builder title(String title) {
             this.title = title;
