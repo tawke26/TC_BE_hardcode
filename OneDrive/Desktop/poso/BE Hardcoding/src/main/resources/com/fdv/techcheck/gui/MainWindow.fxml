@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.fdv.techcheck.gui.MainWindowController"
+            prefHeight="700.0" prefWidth="900.0">
+   
+   <!-- Menu Bar -->
+   <top>
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleBrowseDocument" text="Open Document..." />
+                  <SeparatorMenuItem />
+                  <MenuItem mnemonicParsing="false" onAction="#handleExportReport" text="Export Report..." />
+                  <SeparatorMenuItem />
+                  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About TechCheck" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
+   
+   <!-- Main Content -->
+   <center>
+      <VBox spacing="15.0">
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="15.0" />
+         </padding>
+         
+         <!-- Document Selection Section -->
+         <VBox spacing="8.0" styleClass="section-box">
+            <Label styleClass="section-title" text="Document Selection">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <TextField fx:id="documentPathField" prefWidth="500.0" promptText="No document selected" />
+               <Button fx:id="browseButton" mnemonicParsing="false" onAction="#handleBrowseDocument" 
+                       prefWidth="100.0" text="Browse..." />
+               <Region HBox.hgrow="ALWAYS" />
+               <Button fx:id="startValidationButton" mnemonicParsing="false" onAction="#handleStartValidation" 
+                       prefWidth="120.0" styleClass="primary-button" text="Start Validation" />
+            </HBox>
+            
+            <Label fx:id="documentInfoLabel" styleClass="info-label" text="No document loaded" />
+         </VBox>
+         
+         <!-- Progress Section -->
+         <VBox spacing="8.0" styleClass="section-box">
+            <Label styleClass="section-title" text="Validation Progress">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            
+            <ProgressBar fx:id="validationProgressBar" maxWidth="Infinity" prefHeight="20.0" progress="0.0" />
+            <Label fx:id="progressLabel" styleClass="progress-label" text="Ready to validate documents" />
+         </VBox>
+         
+         <!-- Results Section -->
+         <VBox spacing="8.0" styleClass="section-box" VBox.vgrow="ALWAYS">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <Label styleClass="section-title" text="Validation Results">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Label>
+               <Region HBox.hgrow="ALWAYS" />
+               <Button fx:id="exportReportButton" mnemonicParsing="false" onAction="#handleExportReport" 
+                       text="Export Report" />
+            </HBox>
+            
+            <ScrollPane fx:id="resultsScrollPane" fitToWidth="true" hbarPolicy="NEVER" 
+                        prefHeight="250.0" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="resultsContainer" spacing="10.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     
+                     <!-- Initial placeholder -->
+                     <Label styleClass="placeholder-text" text="No validation results yet. Select a document and start validation." />
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </VBox>
+         
+      </VBox>
+   </center>
+   
+   <!-- Bottom Panel - Log Area -->
+   <bottom>
+      <VBox prefHeight="150.0" spacing="5.0" styleClass="log-section">
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+         
+         <Label styleClass="section-title" text="Activity Log">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         
+         <TextArea fx:id="logTextArea" editable="false" prefHeight="120.0" wrapText="true" 
+                   styleClass="log-text-area" />
+      </VBox>
+   </bottom>
+   
+</BorderPane>

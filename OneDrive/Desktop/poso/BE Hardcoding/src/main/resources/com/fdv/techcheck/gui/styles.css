@@ -1,0 +1,374 @@
+/* TechCheck GUI Stylesheet */
+/* Professional styling for Faculty of Social Sciences technical staff */
+
+/* Root styles and color scheme */
+.root {
+    -fx-base: #f4f4f4;
+    -fx-background: #ffffff;
+    -fx-control-inner-background: #ffffff;
+    -fx-accent: #2c5aa0;
+    -fx-focus-color: #2c5aa0;
+    -fx-faint-focus-color: #2c5aa022;
+}
+
+/* Section containers */
+.section-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+.section-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c5aa0;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #e9ecef;
+    -fx-border-color: #adb5bd;
+}
+
+.button:pressed {
+    -fx-background-color: #dee2e6;
+}
+
+.button:disabled {
+    -fx-opacity: 0.6;
+    -fx-cursor: default;
+}
+
+.primary-button {
+    -fx-background-color: #2c5aa0;
+    -fx-border-color: #2c5aa0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.primary-button:hover {
+    -fx-background-color: #1e3f73;
+    -fx-border-color: #1e3f73;
+}
+
+.primary-button:pressed {
+    -fx-background-color: #162e5a;
+}
+
+/* Text fields */
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ced4da;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 12px;
+}
+
+.text-field:focused {
+    -fx-border-color: #2c5aa0;
+    -fx-effect: dropshadow(three-pass-box, rgba(44,90,160,0.25), 0, 0, 0, 0);
+}
+
+/* Labels */
+.info-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6c757d;
+    -fx-font-style: italic;
+}
+
+.progress-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #495057;
+}
+
+.placeholder-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6c757d;
+    -fx-font-style: italic;
+    -fx-alignment: center;
+    -fx-padding: 20px;
+}
+
+/* Progress bar */
+.progress-bar {
+    -fx-accent: #2c5aa0;
+}
+
+.progress-bar .bar {
+    -fx-background-color: #2c5aa0;
+    -fx-background-radius: 4px;
+    -fx-padding: 4px;
+}
+
+.progress-bar .track {
+    -fx-background-color: #e9ecef;
+    -fx-background-radius: 4px;
+}
+
+/* Log section */
+.log-section {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1px 0px 0px 0px;
+}
+
+.log-text-area {
+    -fx-control-inner-background: #ffffff;
+    -fx-border-color: #ced4da;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-family: "Consolas", "Monaco", monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: #495057;
+}
+
+.log-text-area .content {
+    -fx-background-color: #ffffff;
+}
+
+/* Validation results */
+.validation-result {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 12px;
+    -fx-spacing: 8px;
+}
+
+.validation-header {
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-text-fill: #212529;
+}
+
+.validation-status {
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+/* Status colors */
+.status-pass {
+    -fx-text-fill: #28a745;
+}
+
+.status-warning {
+    -fx-text-fill: #ffc107;
+}
+
+.status-fail {
+    -fx-text-fill: #dc3545;
+}
+
+.status-error {
+    -fx-text-fill: #dc3545;
+}
+
+.status-unknown {
+    -fx-text-fill: #6c757d;
+}
+
+/* Validation details */
+.validation-details {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px;
+    -fx-spacing: 4px;
+}
+
+.validation-detail {
+    -fx-font-size: 11px;
+    -fx-text-fill: #495057;
+    -fx-wrap-text: true;
+}
+
+/* Menu styling */
+.menu-bar {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 0px 0px 1px 0px;
+}
+
+.menu-item {
+    -fx-font-size: 12px;
+}
+
+/* Scroll pane */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+/* Scroll bars */
+.scroll-bar:vertical {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1px 0px 1px 1px;
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+    -fx-pref-width: 12px;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1px 1px 0px 1px;
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+    -fx-pref-height: 12px;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #ced4da;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #adb5bd;
+}
+
+.scroll-bar .thumb:pressed {
+    -fx-background-color: #6c757d;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-pref-width: 0px;
+    -fx-pref-height: 0px;
+}
+
+/* Tooltips */
+.tooltip {
+    -fx-background-color: #343a40;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 11px;
+    -fx-background-radius: 4px;
+    -fx-padding: 6px 8px;
+}
+
+/* Dialog styling */
+.dialog-pane {
+    -fx-background-color: #ffffff;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 0px 0px 1px 0px;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-font-size: 12px;
+    -fx-min-width: 80px;
+}
+
+/* Focus indicators */
+.button:focused,
+.text-field:focused,
+.choice-box:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(44,90,160,0.4), 0, 0, 0, 0);
+}
+
+/* University branding colors - subtle integration */
+.university-accent {
+    -fx-text-fill: #2c5aa0;
+}
+
+.university-secondary {
+    -fx-text-fill: #6c757d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+    .section-box {
+        -fx-padding: 10px;
+    }
+    
+    .button {
+        -fx-padding: 6px 12px;
+        -fx-font-size: 11px;
+    }
+}
+
+/* Animation for progress updates */
+.validation-result {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 1, 0, 0, 1);
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+}
+
+/* Highlight animations for new results */
+.validation-result:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+/* Professional table-like appearance for structured data */
+.structured-data {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1px;
+    -fx-padding: 0px;
+}
+
+.structured-data .row {
+    -fx-border-color: #f1f3f4;
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-padding: 8px 12px;
+}
+
+.structured-data .row:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+/* Header row styling */
+.header-row {
+    -fx-background-color: #e9ecef;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+/* Academic document styling cues */
+.academic-header {
+    -fx-font-family: "Times New Roman", serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c5aa0;
+}
+
+.academic-body {
+    -fx-font-family: "Times New Roman", serif;
+    -fx-font-size: 12px;
+    -fx-line-spacing: 1.5;
+}
