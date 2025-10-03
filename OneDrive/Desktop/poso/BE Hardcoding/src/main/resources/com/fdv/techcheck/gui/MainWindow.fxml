@@ -24,6 +24,11 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleUserGuide" text="User Guide" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleValidationRules" text="Validation Rules" />
+                  <SeparatorMenuItem />
+                  <MenuItem mnemonicParsing="false" onAction="#handleTroubleshooting" text="Troubleshooting" />
+                  <SeparatorMenuItem />
                   <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About TechCheck" />
                </items>
             </Menu>
@@ -47,12 +52,24 @@
             </Label>
             
             <HBox alignment="CENTER_LEFT" spacing="10.0">
-               <TextField fx:id="documentPathField" prefWidth="500.0" promptText="No document selected" />
-               <Button fx:id="browseButton" mnemonicParsing="false" onAction="#handleBrowseDocument" 
-                       prefWidth="100.0" text="Browse..." />
+               <TextField fx:id="documentPathField" prefWidth="500.0" promptText="No document selected">
+                  <tooltip>
+                     <Tooltip text="Path to the selected thesis document (.docx format only)" />
+                  </tooltip>
+               </TextField>
+               <Button fx:id="browseButton" mnemonicParsing="false" onAction="#handleBrowseDocument"
+                       prefWidth="100.0" text="Browse...">
+                  <tooltip>
+                     <Tooltip text="Click to select a thesis document for validation" />
+                  </tooltip>
+               </Button>
                <Region HBox.hgrow="ALWAYS" />
-               <Button fx:id="startValidationButton" mnemonicParsing="false" onAction="#handleStartValidation" 
-                       prefWidth="120.0" styleClass="primary-button" text="Start Validation" />
+               <Button fx:id="startValidationButton" mnemonicParsing="false" onAction="#handleStartValidation"
+                       prefWidth="120.0" styleClass="primary-button" text="Start Validation">
+                  <tooltip>
+                     <Tooltip text="Begin automated validation of the selected document" />
+                  </tooltip>
+               </Button>
             </HBox>
             
             <Label fx:id="documentInfoLabel" styleClass="info-label" text="No document loaded" />
@@ -66,7 +83,11 @@
                </font>
             </Label>
             
-            <ProgressBar fx:id="validationProgressBar" maxWidth="Infinity" prefHeight="20.0" progress="0.0" />
+            <ProgressBar fx:id="validationProgressBar" maxWidth="Infinity" prefHeight="20.0" progress="0.0">
+               <tooltip>
+                  <Tooltip text="Shows progress of validation modules: Margins → Fonts → Spacing → Format" />
+               </tooltip>
+            </ProgressBar>
             <Label fx:id="progressLabel" styleClass="progress-label" text="Ready to validate documents" />
          </VBox>
          
@@ -79,12 +100,19 @@
                   </font>
                </Label>
                <Region HBox.hgrow="ALWAYS" />
-               <Button fx:id="exportReportButton" mnemonicParsing="false" onAction="#handleExportReport" 
-                       text="Export Report" />
+               <Button fx:id="exportReportButton" mnemonicParsing="false" onAction="#handleExportReport"
+                       text="Export Report">
+                  <tooltip>
+                     <Tooltip text="Generate and save a PDF report of validation results" />
+                  </tooltip>
+               </Button>
             </HBox>
             
-            <ScrollPane fx:id="resultsScrollPane" fitToWidth="true" hbarPolicy="NEVER" 
+            <ScrollPane fx:id="resultsScrollPane" fitToWidth="true" hbarPolicy="NEVER"
                         prefHeight="250.0" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+               <tooltip>
+                  <Tooltip text="Validation results: ✓ Passed, ⚠ Warning, ✗ Failed, ! Error" />
+               </tooltip>
                <content>
                   <VBox fx:id="resultsContainer" spacing="10.0">
                      <padding>
@@ -114,8 +142,12 @@
             </font>
          </Label>
          
-         <TextArea fx:id="logTextArea" editable="false" prefHeight="120.0" wrapText="true" 
-                   styleClass="log-text-area" />
+         <TextArea fx:id="logTextArea" editable="false" prefHeight="120.0" wrapText="true"
+                   styleClass="log-text-area">
+            <tooltip>
+               <Tooltip text="Detailed activity log - use for troubleshooting validation issues" />
+            </tooltip>
+         </TextArea>
       </VBox>
    </bottom>
    

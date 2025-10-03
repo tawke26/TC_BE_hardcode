@@ -45,7 +45,10 @@ public abstract class AbstractDocumentValidator implements IValidator<ThesisDocu
      */
     @Override
     public final ValidationResult validate(ThesisDocument document) throws ValidationException {
-        Objects.requireNonNull(document, "Document cannot be null");
+        if (document == null) {
+            throw new ValidationException(validatorName,
+                "Document cannot be null");
+        }
         
         if (!isEnabled()) {
             logger.debug("Validator {} is disabled, skipping validation", validatorName);

@@ -1,14 +1,11 @@
 package com.fdv.techcheck.modules.layout;
 
-import com.fdv.techcheck.core.document.DocumentProcessor;
 import com.fdv.techcheck.core.document.ThesisDocument;
+import com.fdv.techcheck.core.validation.ValidationException;
 import com.fdv.techcheck.core.validation.ValidationResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class Module1IntegrationTest {
 
-    private DocumentProcessor documentProcessor;
     private PageFormatValidator pageFormatValidator;
     private MarginValidator marginValidator;
     private FontValidator fontValidator;
@@ -28,7 +24,6 @@ class Module1IntegrationTest {
 
     @BeforeEach
     void setUp() {
-        documentProcessor = new DocumentProcessor();
         pageFormatValidator = new PageFormatValidator();
         marginValidator = new MarginValidator();
         fontValidator = new FontValidator();
@@ -56,16 +51,14 @@ class Module1IntegrationTest {
     @Test
     @DisplayName("Validators should handle null document gracefully")
     void testNullDocumentHandling() {
-        // Each validator should handle null input gracefully
-        ValidationResult pageResult = pageFormatValidator.validate(null);
-        ValidationResult marginResult = marginValidator.validate(null);
-        ValidationResult fontResult = fontValidator.validate(null);
-        ValidationResult lineSpacingResult = lineSpacingValidator.validate(null);
-
-        // All should return error results for null input
-        assertNotNull(pageResult, "PageFormatValidator should return result for null input");
-        assertNotNull(marginResult, "MarginValidator should return result for null input");
-        assertNotNull(fontResult, "FontValidator should return result for null input");
-        assertNotNull(lineSpacingResult, "LineSpacingValidator should return result for null input");
+        // Each validator should throw ValidationException for null input
+        assertThrows(ValidationException.class, () -> pageFormatValidator.validate(null),
+                "PageFormatValidator should throw ValidationException for null input");
+        assertThrows(ValidationException.class, () -> marginValidator.validate(null),
+                "MarginValidator should throw ValidationException for null input");
+        assertThrows(ValidationException.class, () -> fontValidator.validate(null),
+                "FontValidator should throw ValidationException for null input");
+        assertThrows(ValidationException.class, () -> lineSpacingValidator.validate(null),
+                "LineSpacingValidator should throw ValidationException for null input");
     }
 }

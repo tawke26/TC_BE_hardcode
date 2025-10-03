@@ -11,6 +11,9 @@ import com.fdv.techcheck.modules.layout.MarginValidator;
 import com.fdv.techcheck.modules.layout.FontValidator;
 import com.fdv.techcheck.modules.layout.LineSpacingValidator;
 import com.fdv.techcheck.modules.layout.PageFormatValidator;
+import com.fdv.techcheck.modules.content.HeadingValidator;
+import com.fdv.techcheck.modules.content.ParagraphValidator;
+import com.fdv.techcheck.modules.content.ListValidator;
 import com.fdv.techcheck.reports.PdfReportGenerator;
 
 import javafx.application.Platform;
@@ -69,9 +72,12 @@ public class MainWindowController {
     // Validation modules
     private final List<IValidator> validators = Arrays.asList(
         new MarginValidator(),
-        new FontValidator(), 
+        new FontValidator(),
         new LineSpacingValidator(),
-        new PageFormatValidator()
+        new PageFormatValidator(),
+        new HeadingValidator(),
+        new ParagraphValidator(),
+        new ListValidator()
     );
     
     /**
@@ -475,6 +481,130 @@ public class MainWindowController {
     }
     
     /**
+     * Handles the user guide dialog action.
+     */
+    @FXML
+    private void handleUserGuide() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("User Guide - TechCheck");
+        alert.setHeaderText("Step-by-Step Usage Guide");
+        alert.setContentText(
+            "HOW TO USE TECHCHECK:\n\n" +
+            "1. DOCUMENT SELECTION\n" +
+            "   • Click 'Browse...' to select a thesis document (.docx)\n" +
+            "   • Only Microsoft Word 2007+ documents are supported\n" +
+            "   • Document information will display below the file path\n\n" +
+            "2. START VALIDATION\n" +
+            "   • Click 'Start Validation' to begin automated checking\n" +
+            "   • Progress bar shows validation progress\n" +
+            "   • Each module runs sequentially (Margins → Fonts → Spacing → Format)\n\n" +
+            "3. REVIEW RESULTS\n" +
+            "   • Results appear in the middle panel\n" +
+            "   • ✓ PASSED: Meets requirements\n" +
+            "   • ⚠ WARNING: Minor issues found\n" +
+            "   • ✗ FAILED: Does not meet requirements\n" +
+            "   • ! ERROR: Technical validation error\n\n" +
+            "4. EXPORT REPORT\n" +
+            "   • Click 'Export Report' to save PDF summary\n" +
+            "   • Include PDF in student correspondence\n" +
+            "   • Reports are timestamped automatically\n\n" +
+            "5. ACTIVITY LOG\n" +
+            "   • Bottom panel shows detailed processing steps\n" +
+            "   • Use for troubleshooting issues"
+        );
+        
+        alert.getDialogPane().setPrefWidth(600);
+        alert.showAndWait();
+    }
+
+    /**
+     * Handles the validation rules dialog action.
+     */
+    @FXML
+    private void handleValidationRules() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Validation Rules - TechCheck");
+        alert.setHeaderText("Technical Requirements Checked by TechCheck");
+        alert.setContentText(
+            "MARGIN VALIDATION:\n" +
+            "• Left margin: 2.5 cm minimum\n" +
+            "• Right margin: 2.5 cm minimum\n" +
+            "• Top margin: 2.5 cm minimum\n" +
+            "• Bottom margin: 2.5 cm minimum\n" +
+            "• Applies to all pages in document\n\n" +
+            
+            "FONT VALIDATION:\n" +
+            "• Body text: Times New Roman, 12pt\n" +
+            "• Headings: Times New Roman, 14pt (bold allowed)\n" +
+            "• Footnotes: Times New Roman, 10pt\n" +
+            "• No decorative or script fonts allowed\n\n" +
+            
+            "LINE SPACING VALIDATION:\n" +
+            "• Body text: 1.5 line spacing\n" +
+            "• Footnotes: Single line spacing (1.0)\n" +
+            "• Block quotes: Single line spacing (1.0)\n" +
+            "• Consistent throughout document\n\n" +
+            
+            "PAGE FORMAT VALIDATION:\n" +
+            "• Paper size: A4 (210 × 297 mm)\n" +
+            "• Orientation: Portrait only\n" +
+            "• No landscape pages allowed\n" +
+            "• Standard academic format required\n\n" +
+            
+            "NOTE: These rules are based on Faculty of Social Sciences\n" +
+            "thesis formatting guidelines. Contact technical@fdv.uni-lj.si\n" +
+            "for rule clarifications or exceptions."
+        );
+        
+        alert.getDialogPane().setPrefWidth(650);
+        alert.showAndWait();
+    }
+
+    /**
+     * Handles the troubleshooting dialog action.
+     */
+    @FXML
+    private void handleTroubleshooting() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Troubleshooting - TechCheck");
+        alert.setHeaderText("Common Issues and Solutions");
+        alert.setContentText(
+            "DOCUMENT LOADING ISSUES:\n" +
+            "• Problem: 'Error loading document'\n" +
+            "• Solution: Ensure file is .docx format (not .doc or .pdf)\n" +
+            "• Solution: Close document in Microsoft Word before validation\n" +
+            "• Solution: Check file is not corrupted or password-protected\n\n" +
+            
+            "VALIDATION ERRORS:\n" +
+            "• Problem: 'Validation failed' message\n" +
+            "• Solution: Check Activity Log for specific error details\n" +
+            "• Solution: Restart TechCheck and try again\n" +
+            "• Solution: Verify document contains readable text content\n\n" +
+            
+            "EXPORT PROBLEMS:\n" +
+            "• Problem: 'Export Failed' when generating PDF\n" +
+            "• Solution: Ensure you have write permissions to target folder\n" +
+            "• Solution: Close any existing PDF with same filename\n" +
+            "• Solution: Try saving to Desktop or Documents folder\n\n" +
+            
+            "PERFORMANCE ISSUES:\n" +
+            "• Problem: Slow validation for large documents\n" +
+            "• Solution: Expected for documents >100 pages\n" +
+            "• Solution: Close other applications to free memory\n" +
+            "• Solution: Be patient - validation will complete\n\n" +
+            
+            "GETTING HELP:\n" +
+            "• Check Activity Log for detailed error messages\n" +
+            "• Include log details when requesting technical support\n" +
+            "• Contact: technical@fdv.uni-lj.si\n" +
+            "• Include TechCheck version and document type in request"
+        );
+        
+        alert.getDialogPane().setPrefWidth(700);
+        alert.showAndWait();
+    }
+
+    /**
      * Handles the about dialog action.
      */
     @FXML
@@ -488,8 +618,18 @@ public class MainWindowController {
             "University of Ljubljana\n\n" +
             "Automated thesis technical review system\n" +
             "for academic document compliance validation.\n\n" +
-            "For support: technical@fdv.uni-lj.si"
+            "DEVELOPMENT TEAM:\n" +
+            "• System Architecture: TechCheck Development Team\n" +
+            "• Quality Assurance: Faculty Technical Services\n" +
+            "• Requirements Analysis: Academic Standards Committee\n\n" +
+            "SUPPORT:\n" +
+            "• Technical Issues: technical@fdv.uni-lj.si\n" +
+            "• Academic Guidelines: academic-office@fdv.uni-lj.si\n" +
+            "• Software Updates: Available via IT Services\n\n" +
+            "© 2024 Faculty of Social Sciences, University of Ljubljana"
         );
+        
+        alert.getDialogPane().setPrefWidth(550);
         alert.showAndWait();
     }
 }
